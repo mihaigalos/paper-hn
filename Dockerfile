@@ -2,7 +2,7 @@ FROM node:14.12
 
 RUN apt-get update
 RUN npm install http-server -g
-RUN git clone https://github.com/wolfgang42/paper-hn.git
+COPY . /paper-hn
 
 WORKDIR /paper-hn
 RUN yarn install

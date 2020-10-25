@@ -13,8 +13,9 @@ import html2text from 'html2plaintext'
 	await init_titles()
 	
 	const stories = []
-	for (const storyid of (await hnget('topstories')).slice(0, 30)) {
-		const story = await getitem(storyid)
+	const source='https://hacker-news.firebaseio.com/v0/'
+	for (const storyid of (await hnget(source,'topstories')).slice(0, 30)) {
+		const story = await getitem(source,storyid)
 		if (story.type !== 'story') continue // Filter out jobs
 		story.keyword = title_keyword(story.title)
 		if (story.text) { // Self post
@@ -32,9 +33,8 @@ import html2text from 'html2plaintext'
 	}
 	
 	const jobs = []
-	for (const jobid of (await hnget('jobstories')).slice(0, 3)) {
-		const job = await getitem(jobid)
-		job.domain = psl.parse(new URL(job.url).hostname).domain
+	for (const jobid of (await hnget(source, 'jobstories')).slice(0, 3)) {
+		const job = await getitem(source, jobid)
 		const split = job.title.split(' ')
 		const splitix = (split.findIndex(w => w.toLowerCase() === 'hiring') || 3)+1
 		job.title1 = split.slice(0, splitix).join(' ')
