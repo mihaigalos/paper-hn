@@ -10,7 +10,7 @@ while true
 do
     echo "-------------------------------------------"
     echo "Start: $(date)"
-    node --trace-warnings --experimental-modules ./bin/generate-html.mjs --hacker-news=hn 2>&1
+    timeout 600 node --trace-warnings --experimental-modules ./bin/generate-html.mjs --hacker-news=hn 2>&1
     echo "Done: $(date)"
     sleep $REFRESH_INTERVAL
 
@@ -19,7 +19,7 @@ do
     echo "-------------------------------------------"
     echo "Start: $(date)"
 
-    node --trace-warnings --experimental-modules ./bin/generate-html.mjs --hacker-news=hn2 2>&1
+    timeout 600 node --trace-warnings --experimental-modules ./bin/generate-html.mjs --hacker-news=hn2 2>&1
     rm -rf /home/user/cache/hn
     echo "Done: $(date)"
     sleep $REFRESH_INTERVAL
